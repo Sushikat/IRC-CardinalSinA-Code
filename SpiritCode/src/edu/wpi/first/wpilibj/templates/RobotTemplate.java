@@ -36,11 +36,31 @@ public class RobotTemplate extends SimpleRobot {
     double Kp = 0.03;
     
     public void autonomous() {
+        double angle = gyro.getAngle();
         while(isAutonomous() && isEnabled()){
-            double angle = gyro.getAngle();
+            angle = gyro.getAngle();
             // Will switch these later
-            chassis.drive(-1.0, -angle*Kp);
+            chassis.drive(-2.0, -angle*Kp);
         }
+        Timer.delay(2.0);
+        angle = gyro.getAngle() - 90.0;
+        while(isAutonomous() && isEnabled()){
+            angle = gyro.getAngle();
+            chassis.drive(-2.0, -angle * Kp);
+        }
+        Timer.delay(2.0);
+        angle = gyro.getAngle() -90.0;
+        while(isAutonomous() && isEnabled()){
+            angle = gyro.getAngle();
+            chassis.drive(-2.0, -angle * Kp);
+        }
+        Timer.delay(2.0);
+        angle = gyro.getAngle() -90.0;
+        while(isAutonomous() && isEnabled()){
+            angle = gyro.getAngle();
+            chassis.drive(-2.0, -angle * Kp);
+        }
+        
     }
 
     /**
