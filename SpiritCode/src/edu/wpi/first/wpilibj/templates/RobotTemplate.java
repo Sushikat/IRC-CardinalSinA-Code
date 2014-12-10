@@ -41,8 +41,8 @@ public class RobotTemplate extends SimpleRobot {
         int turns = 0; // The number of turns the robot has made (needs to make 4 i think)
         while(turns < 3){ // Put in while loop to count number of times to turn
             autoCount = 0;//Reset secs counter
-            while(autoCount < 3){ //Drive straight for 3 secs
-                while(isEnabled() && isAutonomous()){
+            while(autoCount < 2){ //Drive straight for 2 secs
+                while(isEnabled() && isAutonomous()){ //Drive Straight
                     // Will switch these later
                     chassis.drive(-.5, -angle*Kp);
                     angle = gyro.getAngle(); //Fetch the angle for driving straight
