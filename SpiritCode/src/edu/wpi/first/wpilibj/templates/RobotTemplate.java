@@ -46,8 +46,6 @@ public class RobotTemplate extends SimpleRobot {
     
     /**
      * This function is called once each time the robot enters autonomous mode.
-     * There are lots of while loops and it might look complicated,
-     * but you are repeating something several times, so it makes sense.
      */
     public void autonomous() {
         //turning to the right: chassis.drive(0.0,0.75);
@@ -67,12 +65,45 @@ public class RobotTemplate extends SimpleRobot {
 
     /**
      * This function is called once each time the robot enters operator control.
-     * This is filler I pulled off the FRC website
      */
     public void operatorControl() {
-        mainCompressor.start();
+        mainCompressor.start
+        leftPickup.set(DoubleSolenoid.Value.kReverse);
+        rightPickup.set(DoubleSolenoid.Value.kReverse);
+        shifter.set(DoubleSolenoid.Value.kReverse);
+        
         while(isOperatorControl() && isEnabled()){
             chassis.tankDrive(leftStick, rightStick);
+            //Lower Pickup
+            if(rightStick.getRawButton(1)){
+                leftPickup.set(DoubleSolenoid.Value.kForward);
+                rightPickup.set(DoubleSolenoid.Value.kForward);
+            }
+            //Shift up
+            if(rightStick.getRawButton(5)){
+                shifter.set(DoubleSolenoid.Value.kForward);
+            }
+            //Shift Down
+            if(rightStick.getRawButton(6)){
+                shifter.set(DoubleSolenoid.Value.kReverse);
+            }
+            //Raise Pickup
+            if(rightStick.getRawButton(1)){
+                leftPickup.set(DoubleSolenoid.Value.kReverse);
+                rightPickup.set(DoubleSolenoid.Value.kReverse);
+            }
+            //Spit out
+            if(rightStick.getRawButton(3)){
+                pickup.set(1.0);
+            }else{
+                pickup.set(0.0);
+            }
+            //Pull in
+            if(rightStick.getRawButton(4)){
+                pickup.set(-1.0);
+            }else{
+                pickup.set(0.0);
+            }
         }
     }
     
