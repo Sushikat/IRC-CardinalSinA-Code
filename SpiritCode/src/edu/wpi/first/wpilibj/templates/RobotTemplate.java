@@ -28,17 +28,21 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
  * directory.
  */
 public class RobotTemplate extends SimpleRobot {
+    
     RobotDrive chassis = new RobotDrive(leftDrive, rightDrive);
+    
     Joystick leftStick = new Joystick(1);
     Joystick rightStick = new Joystick(2);
-    Gyro gyro = new Gyro(1);
+    
     Talon leftDrive = new Talon(1);
     Talon rightDrive = new Talon(2);
-    Compressor mainCompressor = new Compressor(1, 1);
-    DoubleSolenoid shifter = new DoubleSolenoid(1, 2);
-    DoubleSolenoid rightPickup = new DoubleSolenoid(3,4);
-    DoubleSolenoid leftPickup = new DoubleSolenoid(5,6);
+    Talon pickup = new Talon(3);
     
+    Compressor mainCompressor = new Compressor(1, 1);
+    
+    DoubleSolenoid shifter = new DoubleSolenoid(5,6);
+    DoubleSolenoid rightPickup = new DoubleSolenoid(3,4);
+    DoubleSolenoid leftPickup = new DoubleSolenoid(1,2);
     
     /**
      * This function is called once each time the robot enters autonomous mode.
@@ -46,25 +50,19 @@ public class RobotTemplate extends SimpleRobot {
      * but you are repeating something several times, so it makes sense.
      */
     public void autonomous() {
-        final double Kp = 0.03; //Proportionality Constant for turning (Google it)
-        int autoCount = 0; // Seconds counter
-        double angle = gyro.getAngle(); //The angle from home as measured by the gyro
-        int turns = 0; // The number of turns the robot has made (needs to make 4 i think)
-        while(turns < 3){ // Put in while loop to count number of times to turn
-            autoCount = 0;//Reset secs counter
-            while(autoCount < 2){ //Drive straight for 2 secs
-                while(isEnabled() && isAutonomous()){ //Drive Straight
-                    // Will switch these later
-                    chassis.drive(-.5, -angle*Kp);
-                    angle = gyro.getAngle(); //Fetch the angle for driving straight
-                }
-                Timer.delay(1.0); // Let one second of doing ^that pass
-                autoCount++; // Increment seconds counter
-            }
-            angle = gyro.getAngle() - 90; // Turn 90 (not sure if left or right)
-            turns++; // Increment turn count
+        //turning to the right: chassis.drive(0.0,0.75);
+        mainCompressor.start();
+        leftPickup.set(DoubleSolenoid.Value.kReverse);
+        rightPickup.set(DoubleSolenoid.Value.kReverse);
+        shifter.set(DoubleSolenoid.Value.kReverse);
+        int autoCount = 0;              //Turn 4x
+        while(autoCount < 4) {
+            chassis.drive(-0.5, 0.0);   //Drive forward @ half speed
+            Timer.delay(3.0);           //Drive for 3 secs
+            chassis.drive(0.0,0.75);    //Turn Right
+            Timer.delay(0.125);          //Wait 1/8 secs
+            autoCount++;                //Increment turn
         }
-        chassis.drive(0.0, 0.0); // Stop at the end
     }
 
     /**
@@ -72,10 +70,9 @@ public class RobotTemplate extends SimpleRobot {
      * This is filler I pulled off the FRC website
      */
     public void operatorControl() {
-        chassis.setSafetyEnabled(true);
+        mainCompressor.start();
         while(isOperatorControl() && isEnabled()){
             chassis.tankDrive(leftStick, rightStick);
-            Timer.delay(0.01);
         }
     }
     
