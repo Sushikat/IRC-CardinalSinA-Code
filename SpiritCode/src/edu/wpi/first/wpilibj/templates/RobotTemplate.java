@@ -16,6 +16,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,10 +28,18 @@ import edu.wpi.first.wpilibj.Timer;
  * directory.
  */
 public class RobotTemplate extends SimpleRobot {
-    RobotDrive chassis = new RobotDrive(1, 2);
+    RobotDrive chassis = new RobotDrive(leftDrive, rightDrive);
     Joystick leftStick = new Joystick(1);
     Joystick rightStick = new Joystick(2);
     Gyro gyro = new Gyro(1);
+    Talon leftDrive = new Talon(1);
+    Talon rightDrive = new Talon(2);
+    Compressor mainCompressor = new Compressor(1, 1);
+    DoubleSolenoid shifter = new DoubleSolenoid(1, 2);
+    DoubleSolenoid rightPickup = new DoubleSolenoid(3,4);
+    DoubleSolenoid leftPickup = new DoubleSolenoid(5,6);
+    
+    
     /**
      * This function is called once each time the robot enters autonomous mode.
      * There are lots of while loops and it might look complicated,
