@@ -67,7 +67,7 @@ public class RobotTemplate extends SimpleRobot {
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
-        mainCompressor.start
+        mainCompressor.start();
         leftPickup.set(DoubleSolenoid.Value.kReverse);
         rightPickup.set(DoubleSolenoid.Value.kReverse);
         shifter.set(DoubleSolenoid.Value.kReverse);
