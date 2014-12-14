@@ -49,7 +49,7 @@ public class RobotTemplate extends SimpleRobot {
      */
     public void autonomous() {
         //turning to the right: chassis.drive(0.0,0.75);
-        mainCompressor.start();
+        mainCompressor.start(); 
         leftPickup.set(DoubleSolenoid.Value.kReverse);
         rightPickup.set(DoubleSolenoid.Value.kReverse);
         shifter.set(DoubleSolenoid.Value.kReverse);
